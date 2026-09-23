@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P 60-24 EVO — GitHub Copilot Integration Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #0f0f23;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid #00d4ff;
+            padding-bottom: 2rem;
+        }
+        header h1 {
+            color: #00d4ff;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            color: #aaa;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .section h2 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .prompt-box {
+            background: #1a1a2e;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        .prompt-box h3 {
+            color: #ffa500;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+        .prompt-text {
+            background: #0f0f23;
+            border: 1px solid #00d4ff;
+            padding: 1rem;
+            border-radius: 4px;
+            color: #00d4ff;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .copy-btn:hover {
+            background: #00ff00;
+        }
+        .instruction {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 3px solid #00d4ff;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .warning {
+            background: rgba(255, 165, 0, 0.1);
+            border-left: 3px solid #ffa500;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: rgba(0, 212, 0, 0.1);
+            border-left: 3px solid #00d400;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        code {
+            background: #1a1a2e;
+            color: #00ff00;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+        .step {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border-left: 4px solid #ffa500;
+            background: rgba(255, 165, 0, 0.05);
+        }
+        .step.ready {
+            border-left-color: #00d400;
+            background: rgba(0, 212, 0, 0.05);
+        }
+        .step h3 {
+            color: #ffa500;
+            margin-bottom: 0.5rem;
+        }
+        .step.ready h3 {
+            color: #00d400;
+        }
+        ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+        li {
+            margin: 0.5rem 0;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 GitHub Copilot Integration — P2P 60-24 EVO</h1>
+            <p>Prompts for Phase 1 implementation in VS Code</p>
+            <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #666;">Session 3 | Ready for Team Execution</p>
+        </header>
+
+        <!-- SETUP SECTION -->
+        <div class="section">
+            <h2>📋 Setup: Copilot in VS Code</h2>
+
+            <div class="instruction">
+                <strong>Prerequisites:</strong>
+                <ul>
+                    <li>VS Code installed</li>
+                    <li>GitHub Copilot extension (free trial or subscription)</li>
+                    <li>Logged in to GitHub</li>
+                </ul>
+            </div>
+
+            <div class="step ready">
+                <h3>✅ Step 1: Install Copilot</h3>
+                <p>In VS Code:</p>
+                <ol>
+                    <li>Extensions → search "GitHub Copilot"</li>
+                    <li>Install official extension by GitHub</li>
+                    <li>Sign in with GitHub account</li>
+                    <li>Enable Copilot Chat (alternative: <code>Ctrl+Shift+I</code>)</li>
+                </ol>
+            </div>
+
+            <div class="step ready">
+                <h3>✅ Step 2: Clone Repository</h3>
+                <div class="prompt-text">git clone https://github.com/P2P-60-24/p2p-60-24-evo.git
+cd p2p-60-24-evo
+code .</div>
+            </div>
+
+            <div class="step ready">
+                <h3>✅ Step 3: Open Copilot Chat</h3>
+                <p>In VS Code: <code>Ctrl+Shift+I</code> (Windows/Linux) or <code>Cmd+Shift+I</code> (Mac)</p>
+                <p>Then paste any prompt below</p>
+            </div>
+        </div>
+
+        <!-- IDENTITY MODULE PROMPTS -->
+        <div class="section">
+            <h2>🔐 Module 1: Identity (ADR-001)</h2>
+
+            <div class="prompt-box">
+                <h3>Prompt A: Implement Ed25519 Signing Tests</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Write comprehensive unit tests for pkg/identity/identity.go
+Tests should verify:
+1. New() generates valid Ed25519 keypair
+2. Sign() produces valid 64-byte signature
+3. Verify() correctly validates signatures
+4. Invalid signatures are rejected
+5. Edge cases: nil inputs, empty messages
+
+Follow Go testing conventions. Use testify/assert.
+Target: >90% coverage</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt B: Add Identity Serialization</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Extend pkg/identity/identity.go with serialization:
+
+Add methods:
+- MarshalJSON() → JSON representation (public key only)
+- UnmarshalJSON() → restore from JSON
+- Serialize() → bytes representation for transport
+- Deserialize(data []byte) → restore from bytes
+
+Ensure private key is NEVER serialized.
+Add error handling for malformed inputs.
+Include unit tests.</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt C: Multi-Key Identity Management</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Create pkg/identity/manager.go:
+
+IdentityManager should:
+- Store multiple identities (map[string]*Identity)
+- Generate new identities on demand
+- Load/save identities from persistent storage
+- List all managed identities
+- Rotate primary identity
+
+Methods:
+- CreateIdentity(name string) (*Identity, error)
+- GetIdentity(nodeID string) (*Identity, bool)
+- ListIdentities() []string
+- DeleteIdentity(nodeID string) error
+
+Thread-safe with sync.RWMutex</div>
+            </div>
+        </div>
+
+        <!-- TRANSPORT MODULE PROMPTS -->
+        <div class="section">
+            <h2>📡 Module 2: Transport (ADR-002)</h2>
+
+            <div class="prompt-box">
+                <h3>Prompt A: Implement UDP Message Serialization</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Extend pkg/transport/transport.go Message struct:
+
+Add serialization:
+- Message.Marshal() → []byte (MessagePack or JSON)
+- UnmarshalMessage(data []byte) → *Message
+- Encrypt payload with sender's Ed25519 public key
+- Add version field for backward compatibility
+
+Test with various payload sizes (0 bytes to 4KB)
+Ensure signature verification works
+Include fuzzing tests</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt B: Complete UDP Listen Loop</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Implement UDP6024.listen() method:
+
+1. Deserialize incoming UDP packets
+2. Verify Ed25519 signature from sender
+3. Call all registered handlers
+4. Handle errors gracefully (malformed packets)
+5. Measure latency of handler execution
+6. Add debug logging for packet flow
+
+Add metrics:
+- packets_received
+- packets_dropped
+- handler_errors
+
+Thread-safe channel for shutdown signal</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt C: Peer Discovery & Registry</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Create pkg/transport/peerdiscovery.go:
+
+PeerRegistry should:
+- Track known peers (NodeID → UDPAddr)
+- Auto-expire stale peers (30 min TTL)
+- Support mDNS discovery (optional)
+- Periodic ping to check liveness
+- Exponential backoff retry
+
+Methods:
+- RegisterPeer(nodeID, addr string)
+- GetPeer(nodeID string) (*net.UDPAddr, error)
+- GetActivePeers() []string
+- RemovePeer(nodeID string)
+
+Add tests for TTL expiration</div>
+            </div>
+        </div>
+
+        <!-- EVENTBUS MODULE PROMPTS -->
+        <div class="section">
+            <h2>📊 Module 3: EventBus</h2>
+
+            <div class="prompt-box">
+                <h3>Prompt A: Event Serialization & Persistence</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Extend pkg/eventbus/eventbus.go:
+
+Add persistence layer:
+- SaveEvent(evt *Event) error → write to file/DB
+- LoadEvents(since time.Time) []*Event
+- Checkpoint() []byte → snapshot for recovery
+- Replay([]byte) error → restore from snapshot
+
+Implement 30-day retention:
+- Auto-cleanup old events (cron job)
+- Batch deletes for performance
+
+Use JSON format for events.
+Add compression for archived events.
+Include tests for recovery scenarios</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt B: 2-of-3 Quorum Validation</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Implement quorum verification in EventBus:
+
+Add QuorumValidator:
+- Track 3 validator nodes (hardcoded or config)
+- Require 2-of-3 signatures on critical events
+- Events types requiring quorum:
+  * EVENT_STATE_UPDATED
+  * EVENT_GROUP_FORMED
+  * EVENT_REPUTATION_UPDATED
+
+Methods:
+- RequiresQuorum(eventType EventType) bool
+- ValidateQuorum(evt *Event, sigs [][]byte) bool
+- AddSignature(evt *Event, sig []byte) error
+
+Test: fail if <2 signatures, pass if ≥2</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt C: Event Replay & Recovery</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Create pkg/eventbus/recovery.go:
+
+EventRecoveryManager should:
+- Load event log from disk on startup
+- Replay events in chronological order
+- Rebuild state from events (event sourcing)
+- Detect gaps/missing events
+- Validate event chain integrity
+
+Recovery flow:
+1. Load checkpoint
+2. Replay events since checkpoint
+3. Validate final state hash
+4. Report recovery status
+
+Add metrics:
+- events_replayed
+- recovery_time_ms
+- final_state_hash
+
+Include integration tests</div>
+            </div>
+        </div>
+
+        <!-- STATESTORE MODULE PROMPTS -->
+        <div class="section">
+            <h2>💾 Module 4: StateStore (BadgerDB)</h2>
+
+            <div class="prompt-box">
+                <h3>Prompt A: BadgerDB Integration</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Implement BadgerDB backend in pkg/statestore/statestore.go:
+
+Extend BadgerStore:
+- Initialize BadgerDB with default config
+- Implement Put() with LWW CRDT semantics
+- Implement Get(), Delete(), Range()
+- Handle DB corruption gracefully
+- Support snapshots (backup/restore)
+
+Add:
+- Compaction strategy (weekly)
+- GC settings (70% DISCARD_RATIO)
+- Key versioning (metadata tracking)
+
+Include tests:
+- Concurrent put/get operations
+- LWW conflict resolution
+- Recovery from corruption</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt B: CRDT Merge & Conflict Resolution</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Create pkg/statestore/crdt.go:
+
+LWWRegister (Last-Write-Wins):
+- Timestamp-based conflict resolution
+- Bias toward higher timestamp
+- Handle clock skew (3s tolerance)
+
+Methods:
+- Merge(local, remote StateEntry) StateEntry
+- ResolveConflict(entries []StateEntry) StateEntry
+
+Multi-value CRDT (optional):
+- Keep version history
+- Track causality with vector clocks
+- Support application-level conflict resolution
+
+Add comprehensive tests:
+- Concurrent updates
+- Network delays
+- Clock inconsistencies</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt C: Snapshot & Restore</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Implement snapshot management in StateStore:
+
+Add methods:
+- Snapshot() ([]byte, error) → complete state dump
+- Restore([]byte) error → load from snapshot
+- IncrementalSnapshot() → delta since last
+- VerifyChecksum() error → validate snapshot integrity
+
+Snapshot format:
+- Version header
+- Timestamp
+- All KV pairs with timestamps
+- SHA256 checksum
+
+Use gzip compression.
+Incremental snapshots track last change timestamp.
+Include background snapshot task (hourly).</div>
+            </div>
+        </div>
+
+        <!-- MATCHING MODULE PROMPTS -->
+        <div class="section">
+            <h2>🎯 Module 5: MatchingOrchestrator</h2>
+
+            <div class="prompt-box">
+                <h3>Prompt A: Implement Matching Algorithm</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Improve pkg/matching/orchestrator.go matching logic:
+
+Current algorithm is greedy. Enhance with:
+1. Scoring function:
+   - Quality factor (0-1)
+   - Quantity ratio (normalized)
+   - Buyer/seller reputation (0-1)
+   - Composite score = 0.4*quality + 0.4*quantity + 0.2*reputation
+
+2. Ranking:
+   - Sort matches by score (descending)
+   - Return top N matches (default 5)
+
+3. Edge cases:
+   - Partial fulfillment (buyer accepts 80%)
+   - Multiple sellers for one need
+   - Bidding/negotiation
+
+Add unit tests with sample data.</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt B: Match Lifecycle & State Transitions</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Create pkg/matching/lifecycle.go:
+
+MatchState enum:
+- PROPOSED (initial match)
+- NEGOTIATING (parties discussing)
+- ACCEPTED (both agreed)
+- REJECTED (one party declined)
+- COMPLETED (fulfilled)
+- DISPUTED (conflict)
+- ARCHIVED (closed)
+
+MatchLifecycle:
+- TransitionTo(state MatchState) error
+- ValidateTransition(from, to) bool
+- OnStateChange(handler func)
+- RollbackIfFailed()
+
+Add state machine validation:
+- PROPOSED → NEGOTIATING, REJECTED
+- NEGOTIATING → ACCEPTED, REJECTED
+- ACCEPTED → COMPLETED, DISPUTED
+- etc.
+
+Include timeout handling (30 day max).</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt C: Persistent Match Storage</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Extend MatchingOrchestrator with persistence:
+
+Save/load matches to StateStore:
+- Key: "matches:{matchID}"
+- Value: serialized Match + Lifecycle
+
+Methods:
+- SaveMatch(m *Match) error
+- LoadMatch(matchID string) (*Match, error)
+- LoadMatchesByNeed(needID string) []*Match
+- LoadMatchesBySeller(sellerID string) []*Match
+
+Query methods:
+- GetActive() []*Match (exclude COMPLETED/ARCHIVED)
+- GetExpired() []*Match (>30 days)
+- GetByState(state MatchState) []*Match
+
+Add background cleanup task.</div>
+            </div>
+        </div>
+
+        <!-- REPUTATION MODULE PROMPTS -->
+        <div class="section">
+            <h2>⭐ Module 6: ReputationWeighter</h2>
+
+            <div class="prompt-box">
+                <h3>Prompt A: Bayesian Update Optimization</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Optimize Bayesian updates in pkg/reputation/weighter.go:
+
+Current: simple alpha/beta increment.
+
+Enhance:
+1. Weighted feedback:
+   - RecordSuccess(nodeID, weight float64) → alpha += weight
+   - weight based on match value, recency
+   - recent interactions weighted 2x more
+
+2. Feedback quality:
+   - Verified feedback (2.0x multiplier)
+   - Contested feedback (0.5x multiplier, disputed)
+   - Unverified feedback (1.0x baseline)
+
+3. Convergence tracking:
+   - Calculate confidence interval (95%)
+   - Return bool when confident (narrow CI)
+   - High variance early → narrow over time
+
+Add tests with various alpha/beta ratios.</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt B: Decay Algorithm Implementation</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Enhance ApplyDecay() in ReputationRecord:
+
+Current: 0.99/week multiplier.
+
+Improve:
+1. Recency bias:
+   - Recent interactions decay slower
+   - Older interactions decay faster
+   - Half-life = 30 days for neutral score
+
+2. Tier protection:
+   - EXEMPLARY (>0.8): decay 0.98/week
+   - VERIFIED (0.6-0.8): decay 0.99/week
+   - TRUSTED (0.4-0.6): decay 0.995/week
+   - NOVICE (<0.4): decay 1.0/week (no decay)
+
+3. Persistence:
+   - Save decay progress to StateStore
+   - Resume from last checkpoint on restart
+
+Add unit tests with time advancement.</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt C: Reputation Analytics & Metrics</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Create pkg/reputation/analytics.go:
+
+ReputationAnalytics:
+- GetDistribution() → histogram of scores (10 buckets)
+- GetTierCounts() → {TIER: count}
+- GetTrustNetwork() → nodes with score > 0.5
+- GetOutliers() → nodes with unusual patterns
+
+Metrics:
+- average_reputation (network-wide)
+- reputation_variance
+- tier_distribution
+- recent_change_rate (how fast scores changing)
+
+Methods:
+- Forecast(nodeID, days int) float64 → predict future score
+- GetInfluencers() []string → high-reputation nodes
+- GetRiskNodes() []string → declining reputation
+
+Export as JSON/CSV for analysis.</div>
+            </div>
+        </div>
+
+        <!-- GROUP & CONTEXT PROMPTS -->
+        <div class="section">
+            <h2>👥 Modules 7-8: GroupManager & ContextManager</h2>
+
+            <div class="prompt-box">
+                <h3>Prompt A: Dunbar Circle Implementation</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Extend pkg/group/group.go with Dunbar mechanics:
+
+Current: basic member tracking.
+
+Add:
+1. Dynamic rebalancing:
+   - DUNBAR_INNERMOST (5): highest trust
+   - DUNBAR_INNER (15): close ties
+   - DUNBAR_MIDDLE (50): friends
+   - DUNBAR_OUTER (150): acquaintances
+   - Automatically move members between circles based on interaction
+
+2. Activity scoring:
+   - Interactions increase trust within circle
+   - Inactivity triggers demotion
+   - Betrayal triggers expulsion
+
+3. Circle eviction policy:
+   - When full, demote least-trusted member
+   - Provide grace period before removal
+
+Add tests: member lifecycle, circle transitions.</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt B: Context Boundaries & Access Control</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Enhance pkg/context/context.go:
+
+Add access control:
+1. Roles in context:
+   - OWNER (creator, full control)
+   - MEMBER (can read, propose actions)
+   - OBSERVER (read-only)
+   - BANNED (no access)
+
+2. Permissions:
+   - AddParticipant(nodeID, role) error
+   - CanRead(nodeID) bool
+   - CanWrite(nodeID) bool
+   - CanModerate(nodeID) bool
+
+3. Context quotas:
+   - Max participants per context
+   - Storage limit for context data
+   - Time limits (expire after TTL)
+
+4. Audit log:
+   - Track who changed what when
+   - Immutable event log
+
+Add tests: permission matrix, role transitions.</div>
+            </div>
+
+            <div class="prompt-box">
+                <h3>Prompt C: Group & Context Persistence</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Implement persistence for Groups & Contexts:
+
+Save to StateStore:
+- Key: "groups:{groupID}" or "contexts:{contextID}"
+- Value: serialized struct + metadata
+
+Add methods:
+- (gm *GroupManager) SaveAll() error
+- (gm *GroupManager) LoadAll() error
+- (cm *ContextManager) SaveAll() error
+- (cm *ContextManager) LoadAll() error
+
+Consistency:
+- Atomic writes (all or nothing)
+- Versioning (detect conflicts)
+- Snapshot on every change
+
+Recovery:
+- Load on startup
+- Verify integrity
+- Replay pending actions
+
+Add tests: crash recovery, concurrent access.</div>
+            </div>
+        </div>
+
+        <!-- TESTING PROMPTS -->
+        <div class="section">
+            <h2>🧪 Testing & Quality</h2>
+
+            <div class="prompt-box">
+                <h3>Prompt A: Integration Tests</h3>
+                <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+                <div class="prompt-text">Create pkg/integration_test.go:
+
+End-to-end test scenarios:
+1. Two-node exchange:
+   - Node A publishes NEED for resource X
+   - Node B publishes OFFER for resource X
+   - EventBus notifies both
+   - MatchingOrchestrator finds match
+   - Both reputation scores updated
+   - Context created for transaction
+
+2. Network resilience:
+   - Drop packet, retry succeeds
+   - Replay duplicate message (idempotent)
+   - Concurrent updates to same state
+
+3. Complete lifecycle:
+   - Node startup
+   - Identity generation
+   - Transport initialization
+   - EventBus subscription
+   - Publish Need/Offer
+   - Match found
+   - Reputation updated
+   - Graceful shutdown
+
+Run with: go test -v -run TestIntegration ./...

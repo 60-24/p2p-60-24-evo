@@ -1,0 +1,63 @@
+#!/bin/bash
+# P2P 60-24 EVO — GitHub Push Instructions
+# Session 3 Cleanup Phase — Autonomous Execution Complete
+# Run this from authenticated GitHub environment
+
+echo "═══════════════════════════════════════════════════════════════"
+echo "  P2P 60-24 EVO — PUSH TO GITHUB (Manual Step)"
+echo "═══════════════════════════════════════════════════════════════"
+echo ""
+
+cd /home/claude/p2p-60-24-evo
+
+echo "📊 Current Status:"
+echo "  Branch: $(git branch --show-current)"
+echo "  Commits ahead: $(git rev-list --count origin/main..HEAD 2>/dev/null || echo 'unknown')"
+echo "  Files to push: $(git diff --cached --name-only | wc -l)"
+echo ""
+
+echo "📤 Pushing to GitHub..."
+echo "═══════════════════════════════════════════════════════════════"
+
+# Try SSH first
+if command -v ssh &> /dev/null; then
+    echo "Attempting SSH push..."
+    git push -u origin main
+    if [ $? -eq 0 ]; then
+        echo ""
+        echo "✅ SSH push succeeded!"
+        exit 0
+    fi
+fi
+
+# Fallback to HTTPS
+echo "SSH unavailable, trying HTTPS..."
+git push -u origin main
+
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "✅ HTTPS push succeeded!"
+else
+    echo ""
+    echo "⚠️ Push failed. Manual authentication required."
+    echo ""
+    echo "Options:"
+    echo "1. SSH: git@github.com:P2P-60-24/p2p-60-24-evo.git"
+    echo "2. HTTPS + PAT: https://[token]@github.com/P2P-60-24/p2p-60-24-evo.git"
+    echo "3. GitHub CLI: gh repo sync"
+    exit 1
+fi
+
+echo ""
+echo "═══════════════════════════════════════════════════════════════"
+echo "✅ PUSH COMPLETE"
+echo "═══════════════════════════════════════════════════════════════"
+echo ""
+echo "Verifying remote..."
+git log --oneline -5
+echo ""
+echo "Remote status:"
+git remote -v
+echo ""
+echo "Branch tracking:"
+git branch -vv
